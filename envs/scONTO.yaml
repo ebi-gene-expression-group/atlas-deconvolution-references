@@ -1,0 +1,12 @@
+name: scONTO
+channels: 
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - r-devtools
+  - r-seurat
+  - r-plyr
+  - r-ontologyindex
+  - r-ontologyplot
+

@@ -1,0 +1,10 @@
+name: tissueSplit
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - r-seurat
+  - r-r.utils
+  - r-argparse

@@ -1,0 +1,11 @@
+name: SeuratObject
+
+channels: 
+  - conda-forge
+  - bioconda 
+
+dependencies:
+  - r-seurat
+  - r-plyr
+  - r-stringr
+  - r-devtools
