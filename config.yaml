@@ -1,0 +1,22 @@
+accessions:
+  # - E-CURD-88
+  # - E-MTAB-10553
+  # - E-MTAB-9467
+  # - E-CURD-119
+  # - E-HCAD-15
+  # - E-ANND-4
+  # - E-ANND-2
+  - E-MTAB-8410
+  - E-HCAD-35
+
+
+exclude_tissues_from_accessions:
+  - UBERON_0002367_E-ANND-2 #prostate gland from tabula sapiens has more cell type labels
+  - UBERON_0002048_E-HCAD-15 #better seperation of clusters in gtex
+  - UBERON_0001911_E-ANND-4 #gtex has more suitable cell type labels
+  - UBERON_0001159_E-CURD-88 #E-ANND-4 has more suitable cell types for sigmoid colon
+  - UBERON_0001134_E-ANND-4 # gtex cell tye labels a bit better
+  - UBERON_0000948_E-ANND-2 # tabula sapiens slightly better
+
+
+   
