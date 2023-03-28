@@ -79,7 +79,6 @@ def input_for_copy(wildcards):
         col = mtx_path + f"/matrices/raw/barcodes.tsv.gz"
         row = mtx_path + f"/matrices/raw/genes.tsv.gz"
         meta = mtx_path + f"/{wildcards['experiment']}.cell_metadata.tsv"
-        print(col)
         return [mtx,  col, row , meta]
     else:
         return [os.path.join(config['atlas_prod'], wildcards['experiment'], \ 

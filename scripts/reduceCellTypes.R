@@ -69,7 +69,7 @@ reduce_number_of_cell_types <- function(seurat, cell_ontology, additional_ontolo
 }
 
 # Load cell ontology index
-obo_file <- "deconvolution-reference-library/files/cl-basic.obo"
+obo_file <- "atlas-deconvolution-references/files/cl-basic.obo"
 propagate_relationships <- c('is_a')
 # create Ontology index
 ont <- ontologyIndex::get_OBO(obo_file, propagate_relationships = propagate_relationships)
