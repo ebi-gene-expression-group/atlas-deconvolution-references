@@ -1,10 +1,9 @@
 #!/usr/bin/env Rscript
-
 # create seuratObjects from mtx files for non ANND scxa experiments
 
-library(Seurat)
-library(plyr)
-library(stringr)
+suppressMessages(library(Seurat))
+suppressMessages(library(plyr))
+suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
 
@@ -34,7 +33,6 @@ C$cellID = colnames(C)
 
 # Remove cells without CL and UBERON IDs
 C <- C[, grepl("CL", C$cellType) & grepl("UBERON", C$tissue) ]
-
 
 #save SeuratObject
 saveRDS(C, filename_O)
