@@ -52,8 +52,3 @@ seurat_downsampled = merge(seurat_downsampled[[1]],
 
 # Save output
 saveRDS(seurat_downsampled, args$output)
-
-
-
-
-
