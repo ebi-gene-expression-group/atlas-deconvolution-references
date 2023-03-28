@@ -21,6 +21,10 @@ import os
 import pandas as pd
 
 def get_tissues_per_accession():
+    """
+    Returns list of files with valid combinations of accession and organism
+    parts that are acquired from cell_metadata.tsv
+    """
     outnames = []
     #ANND experiements not yet in atlas_prod
     for accession in config['accessions']:
@@ -36,7 +40,7 @@ def get_tissues_per_accession():
             except Exception as e:
                 print(f"Error: Failed to read file {path[0]}: {e}")
                 continue
-        #for accessions in atals_prod
+        #for accessions in atlas_prod
         else:
             path = os.path.join(config['atlas_prod'], accession, f"{accession}.cell_metadata.tsv")
             if not os.path.isfile(path):
@@ -62,19 +66,14 @@ def get_tissues_per_accession():
     outnames = [x for x in outnames if x not in to_remove]
     return outnames
 
-def input_for_seuratObject(wildcards):
-    if "ANND" in wildcards['experiment']:
-        path = f"scxa_input/{wildcards['experiment']}.project.h5ad"
-        #path = glob.glob(path)
-        return path
-    else:
-        return f"scxa_input/{wildcards['experiment']}.aggregated_filtered_counts.mtx"
-
 def input_for_copy(wildcards):
+    """
+    Returns input paths for rule copyInputFiles, neccessary as ANND accessions require different
+    set of input files 
+    """
     if "ANND" in wildcards['experiment']:
         mtx_path = os.path.join(config['anndata_prod'], "*", wildcards['experiment'])
         mtx_path = glob.glob(mtx_path)[-1]
-        print(mtx_path)
         mtx = mtx_path + f"/matrices/raw/matrix.mtx.gz"
         col = mtx_path + f"/matrices/raw/barcodes.tsv.gz"
         row = mtx_path + f"/matrices/raw/genes.tsv.gz"
@@ -90,7 +89,6 @@ def input_for_copy(wildcards):
                 os.path.join(config['atlas_prod'], wildcards['experiment'],  \ 
                 f"{wildcards['experiment']}.cell_metadata.tsv")]
             
-
 def get_mem_mb(wildcards, attempt):
     """
     To adjust resources in the rules 
@@ -108,8 +106,8 @@ def get_mem_mb(wildcards, attempt):
 #Rule all
 rule all:
     input:
-        get_tissues_per_accession()
-        #'reference_library/homo_sapiens_summary.tsv'
+        #get_tissues_per_accession()
+        config['deconv_ref'] + '/homo_sapiens_summary.tsv'
         
 #Rule for copying all the project anndatafiles we want to build references from
 rule copyInputFiles:
@@ -148,7 +146,7 @@ rule createSeuratObject:
         fi
         """
 
-#Rule to split sc reference into single tissues
+#Rule to split sc reference into single organism parts
 rule splitByTissue:
     log: "logs/splitByTissue/{tissue}_{experiment}.log"
     input:
@@ -216,7 +214,7 @@ rule scale_C:
         Rscript {workflow.basedir}/scripts/scaleTable_C.R {input.C_table} {input.C_phenData} {params.scaleCMethod} {threads}
         """
 
-# plot UMAP plots for quality control of references
+# rule to plot UMAP plots for quality control of references
 rule UMAP_plots:
     log: "logs/UMAP_plots/{tissue}_{experiment}.log"
     input:
