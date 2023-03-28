@@ -1,11 +1,14 @@
+#!/usr/bin/env Rscript
+## script to reduce the number of cell type labes (if there are to many)
+## as this improves deconvolution analysis
 
 # Load required packages
-library(devtools)
-devtools::install_github("YY-SONG0718/scOntoMatch")
-library(scOntoMatch)
-library(ontologyIndex)
-library(Seurat)
-library(plyr)
+suppressMessages(library(devtools))
+suppressMessages(devtools::install_github("YY-SONG0718/scOntoMatch"))
+suppressMessages(library(scOntoMatch))
+suppressMessages(library(ontologyIndex))
+suppressMessages(library(Seurat))
+suppressMessages(library(plyr))
 
 # Define a function to reduce the number of cell types in a Seurat object
 # this function uses the function scOntoMatch::getOntoMinimal() reduce the 
@@ -79,7 +82,6 @@ additional_ontologies = names(ont$ancestors)
 additional_ontologies = unlist(ont$children, use.names = F)
 
 #sort ontology ids that highest ids are in front as they tend to be more specific
-
 additional_ontologies <- additional_ontologies[order(-as.numeric(sub("CL:", "", additional_ontologies)))]
 #remove 'precursor cell', 'progenitor', 'stuff accumulating cell', 'nucleate cell', 'single nucleate cell'
 # id to avoid this term for immune cell
@@ -102,11 +104,8 @@ cell_type_list <- unname(cell_type_names)
 # store the old cell type labels for UMAP later
 seurat$old_cell_type_names <- mapvalues(seurat$cellType, from = ids , to = cell_type_names)
   
-
 # run function to reduce granularity of cell type labels
 seurat = reduce_number_of_cell_types(seurat, ont, additional_ontologies)
 
 #save curated seuratObject
 saveRDS(seurat, sub("_seurat.rds", "_seurat_curated.rds", filename))
-
-
