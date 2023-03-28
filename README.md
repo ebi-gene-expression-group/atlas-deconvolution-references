@@ -1,7 +1,7 @@
 # atlas-deconvolution-references
 Snakemake workflow to generate single-cell reference dataset for deconvolution in Atlas
 
-It contains scripts rules for:
+It contains rules for:
 - SeuratObject creation
 - Spliting SeuratObjects into tissues
 - Reducing cell type label granularity
