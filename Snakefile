@@ -200,8 +200,8 @@ rule generateReferences:
 rule scale_C:
     log: "logs/scale_C/{tissue}_{experiment}.log"
     input:
-        C_table = config['deconv_ref'] + "/{tissue}_{experiment}_C0.rds",
-        C_phenData = config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds"
+        C_table=config['deconv_ref'] + "/{tissue}_{experiment}_C0.rds",
+        C_phenData=config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds"
     output:
         config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
     conda:
@@ -237,7 +237,7 @@ rule reference_summary:
     input:
         expand(get_tissues_per_accession())
     output:
-        'reference_library/homo_sapiens_summary.tsv'
+        config['deconv_ref'] + '/homo_sapiens_summary.tsv'
     conda:
         "envs/scONTO.yaml"
     shell:
