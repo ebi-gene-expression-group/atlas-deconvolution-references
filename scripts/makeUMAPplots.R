@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
-library(Seurat)
-library(cowplot)
-library(ggplot2)
-
+## script to create two UMAP plots for each reference to allow quality control
+## of reference and reduced cell type labels
+suppressMessages(library(Seurat))
+suppressMessages(library(cowplot))
+suppressMessages(library(ggplot2))
 
 args = commandArgs(trailingOnly=TRUE)
 filename <- args[1]
@@ -30,6 +31,7 @@ p2 = DimPlot(seurat_obj,
             group.by = 'cell_type_names' ) + 
             NoLegend() +
             ggtitle('reduced cell type labels')
+#combined plot
 p = p1 + p2
 ggsave(output_file_name, p, width = 24, height = 12, units = "cm")
 
