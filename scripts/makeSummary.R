@@ -15,7 +15,7 @@ sample_list <- args[1:(length(args)-1)]
 outfile <- args[length(args)]
 
 if (!file.exists(outfile)) {
-  write.table(data.frame(Accession = character(), UBERON_ID = character(), organism_part = character()),
+  write.table(data.frame(Accession = character(), UBERON_ID = character(), organism_part = character(), date = character()),
                         outfile, sep = "\t", row.names = FALSE, col.names = TRUE)
 }
 
@@ -36,7 +36,7 @@ for (filename in sample_list){
     
     print(getOntologyName(ont = ont, get_descendants(ont, roots= sub('_', ':', uberon_id))))
     # Append a line with the accession and UBERON ID to the TSV file
-    new_line <- data.frame(Accession = accession, UBERON_ID = uberon_id, organism_part = organism_part)
+    new_line <- data.frame(Accession = accession, UBERON_ID = uberon_id, organism_part = organism_part, date = Sys.Date())
     write.table(new_line, outfile, sep = "\t", row.names = FALSE, col.names = FALSE, append = TRUE)
 
 }
