@@ -13,7 +13,8 @@ It contains scripts rules for:
 
  * Snakemake
  * LSF batch scheduler
- * Set up configuration variables at `run_deconvolution_reference_creation.sh`.
+ * Set up configuration variables at `run_deconvolution_reference_creation.sh`
+ * Config.yaml with sc experiment accessions as input and tissues that are excluded for accessions
 
 
 ## Run pipeline
