@@ -34,5 +34,3 @@ p2 = DimPlot(seurat_obj,
 #combined plot
 p = p1 + p2
 ggsave(output_file_name, p, width = 24, height = 12, units = "cm")
-
-
