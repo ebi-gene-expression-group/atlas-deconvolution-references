@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 ## Reference matrix type 1 (rows = genenames, cols = celltypes) generation script
 ##
 ## @zgr2788
