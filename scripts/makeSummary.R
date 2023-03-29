@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 ### script to create a summary file of all the organism part references we created
 
-# Load required packages
 suppressMessages(library(devtools))
 if (!require("scOntoMatch")) devtools::install_github("YY-SONG0718/scOntoMatch")
 suppressMessages(library(scOntoMatch))
