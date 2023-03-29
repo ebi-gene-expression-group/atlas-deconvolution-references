@@ -15,8 +15,8 @@ It contains rules for:
  * LSF batch scheduler
  * Set up configuration variables at `run_deconvolution_reference_creation.sh`
  * Config.yaml with sc experiment accessions as input and tissues that are excluded for accessions (look at example.yaml how that should look like)
-
-
+ * ontology files for [UBERON](http://purl.obolibrary.org/obo/uberon/basic.obo) and [CL](http://purl.obolibrary.org/obo/cl/c-basic.obo) ontology
+ 
 ## Run pipeline
 
 ```
