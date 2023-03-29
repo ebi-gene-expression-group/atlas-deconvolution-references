@@ -14,7 +14,7 @@ It contains rules for:
  * Snakemake
  * LSF batch scheduler
  * Set up configuration variables at `run_deconvolution_reference_creation.sh`
- * Config.yaml with sc experiment accessions as input and tissues that are excluded for accessions
+ * Config.yaml with sc experiment accessions as input and tissues that are excluded for accessions (look at example.yaml how that should look like)
 
 
 ## Run pipeline
