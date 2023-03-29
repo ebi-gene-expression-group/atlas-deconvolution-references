@@ -159,7 +159,7 @@ rule splitByTissue:
     input:
         "scxa_input/{experiment}/{experiment}.project_seurat.rds"
     output:
-        config['deconv_ref'] + "/{tissue}_{experiment}_seurat.rds"
+        config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_seurat.rds"
     resources: mem_mb=get_mem_mb
     shell:
         """
@@ -176,9 +176,9 @@ rule reduce_celltype_labels:
     conda: "envs/scONTO.yaml"
     log: "logs/reduce_celltype_labels/{tissue}_{experiment}.log"
     input:
-        config['deconv_ref'] + "/{tissue}_{experiment}_seurat.rds"
+        config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_seurat.rds"
     output:
-        temp(config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds")  
+        temp(config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_seurat_curated.rds")  
     resources: mem_mb=get_mem_mb
     shell:
         """
@@ -201,7 +201,7 @@ rule generateReferences:
     output:
         config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_C1.rds",
         config['deconv_ref']+ '/' + config['species'] + "/{tissue}_{experiment}_phenData.rds",
-        temp(config['deconv_ref'] +"/{tissue}_{experiment}_C0.rds")
+        temp(config['deconv_ref'] + '/' + config['species'] +"/{tissue}_{experiment}_C0.rds")
     resources: mem_mb=get_mem_mb
     params:
         method = "none" #do not apply transformation to C matrix
@@ -222,7 +222,7 @@ rule scale_C0_reference:
         C_table=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_C0.rds",
         C_phenData=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_phenData.rds"
     output:
-        config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
+        config['deconv_ref'] +  '/' + config['species'] + "/{tissue}_{experiment}_C0_scaled.rds"
     params: scaleCMethod = 'SCTransform'
     threads: 8
     resources: mem_mb=get_mem_mb
