@@ -204,7 +204,7 @@ rule generateReferences:
         temp(config['deconv_ref'] +"/{tissue}_{experiment}_C0.rds")
     resources: mem_mb=get_mem_mb
     params:
-        method = "none"
+        method = "none" #do not apply transformation to C matrix
     shell:
         """
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
