@@ -6,4 +6,4 @@ channels:
 
 dependencies:
   - bioconductor-sparsematrixstats
-  - r-seurat
+  - r-seurat>=4.3.0
