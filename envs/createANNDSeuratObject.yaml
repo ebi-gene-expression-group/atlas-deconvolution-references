@@ -1,4 +1,4 @@
-name: decon_convert
+name: createANNDSeuratObject
 
 channels:
   - conda-forge
