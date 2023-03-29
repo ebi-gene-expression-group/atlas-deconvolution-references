@@ -1,7 +1,7 @@
 ## script to read in mtx files from ANND experiments
 ## and create SeuratObject
 suppressMessages(library(devtools))
-devtools::install_github('cellgeni/sceasy')
+if (!require("sceasy")) devtools::install_github('cellgeni/sceasy')
 suppressMessages(library(sceasy))
 suppressMessages(library(Seurat))
 suppressMessages(library(plyr))
