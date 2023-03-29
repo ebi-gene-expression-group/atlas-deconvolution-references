@@ -14,9 +14,13 @@ sample_list <- args[1:(length(args)-1)]
 outfile <- args[length(args)]
 
 if (!file.exists(outfile)) {
-  write.table(data.frame(Accession = character(), UBERON_ID = character(), 
-                         organism_part = character(), date = character()),
-              outfile, sep = "\t", row.names = FALSE, col.names = TRUE)
+write.table(data.frame(
+  Accession = character(),
+  UBERON_ID = character(),
+  organism_part = character(),
+  date = character()
+  ), 
+  outfile, sep = "\t", row.names = FALSE, col.names = TRUE)
 }
 
 # read in UBERON ontologies to translate UBERON ids to organism part labels
