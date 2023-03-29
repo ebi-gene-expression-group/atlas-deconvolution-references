@@ -142,8 +142,10 @@ rule createSeuratObject:
         fi
         """
 
-#Rule to split sc reference into single organism parts
 rule splitByTissue:
+    """
+    Rule to split sc reference into single organism parts.
+    """
     log: "logs/splitByTissue/{tissue}_{experiment}.log"
     input:
         "scxa_input/{experiment}/{experiment}.project_seurat.rds"
