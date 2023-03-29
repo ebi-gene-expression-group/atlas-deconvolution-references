@@ -28,7 +28,7 @@ ont <- ontologyIndex::get_OBO(obo_file,
                               propagate_relationships = propagate_relationships, 
                               extract_tags = 'everything')
 
-#append the summary file for all the references
+# append the summary file for all the references
 for (filename in sample_list){
 
     base = basename(filename)
