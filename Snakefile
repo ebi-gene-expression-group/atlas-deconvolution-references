@@ -139,7 +139,7 @@ rule createSeuratObject:
     shell:
         """
         if [[ {wildcards.experiment} == *"ANND"* ]]; then
-            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R{wildcards.experiment}
+            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment}
         else
             Rscript {workflow.basedir}/scripts/createSeuratObject.R {wildcards.experiment}
         fi
