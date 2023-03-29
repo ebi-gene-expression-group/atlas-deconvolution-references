@@ -103,7 +103,7 @@ def get_mem_mb(wildcards, attempt):
     else:
         return mem_avail[attempt-1] * 1000
 
-#Rule all
+# Rule all
 rule all:
     input:
         #get_tissues_per_accession()
