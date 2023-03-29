@@ -5,7 +5,7 @@ channels:
 
 dependencies:
   - r-devtools
-  - r-seurat
+  - r-seurat>=4.3.0
   - r-plyr
   - r-ontologyindex
   - r-ontologyplot
