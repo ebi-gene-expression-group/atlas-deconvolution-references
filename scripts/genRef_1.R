@@ -23,28 +23,22 @@ C_1 <- data.frame(row.names = rownames(C_0@assays$RNA@counts))
 
 #Transform C matrix
 switch(transform,
-
   "none" = {
     message('Warning: No transformation applied')
   },
-
   "log" = {
     C_0@assays$RNA@counts <- log1p(C_0@assays$RNA@counts)
   },
-
   "sqrt" = {
     C_0@assays$RNA@counts <- sqrt(C_0@assays$RNA@counts)
   },
-
-  "vst" = { #DO NOT USE
-    #Not recommended for low memory, uses dense matrix
-    #vst requires int, convert first
+  "vst" = {  # do not use
+    message('Warning: varianceStabilizingTransformation requires high memory and is not recommended.')
     C_0@assays$RNA@counts <- round(C_0@assays$RNA@counts)
-
     C_0@assays$RNA@counts <- DESeq2::varianceStabilizingTransformation(C_0@assays$RNA@counts)
   }
-
 )
+
 
 #Split cells by type
 cellSplits <- SplitObject(C_0, split.by = "cellType")
