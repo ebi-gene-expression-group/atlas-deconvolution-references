@@ -16,21 +16,21 @@ seurat_obj <- FindVariableFeatures(seurat_obj, selection.method = "vst", nfeatur
 seurat_obj <- ScaleData(seurat_obj)
 seurat_obj <- RunPCA(seurat_obj, features = VariableFeatures(object = seurat_obj))
 seurat_obj <- RunUMAP(seurat_obj, dims = 1:10)
-Idents(seurat_obj) = seurat_obj$cell_type_names
+Idents(seurat_obj) <- seurat_obj$cell_type_names
 #plot old cell type labels before running reduceCellTypes.R
-p1 = DimPlot(seurat_obj, 
+p1 <- DimPlot(seurat_obj, 
             reduction = "umap", 
             label = TRUE, 
             group.by = 'old_cell_type_names') + 
             NoLegend() + 
             ggtitle('orig. cell type labels')
 # and plot cell type labels after running reduceCellTypes.R
-p2 = DimPlot(seurat_obj, 
+p2 <- DimPlot(seurat_obj, 
             reduction = "umap", 
             label = TRUE, 
             group.by = 'cell_type_names' ) + 
             NoLegend() +
             ggtitle('reduced cell type labels')
 #combined plot
-p = p1 + p2
+p <- p1 + p2
 ggsave(output_file_name, p, width = 24, height = 12, units = "cm")
