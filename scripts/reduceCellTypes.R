@@ -2,9 +2,8 @@
 ## script to reduce the number of cell type labes (if there are to many)
 ## as this improves deconvolution analysis
 
-# Load required packages
 suppressMessages(library(devtools))
-suppressMessages(devtools::install_github("YY-SONG0718/scOntoMatch"))
+if (!require("scOntoMatch")) devtools::install_github("YY-SONG0718/scOntoMatch")
 suppressMessages(library(scOntoMatch))
 suppressMessages(library(ontologyIndex))
 suppressMessages(library(Seurat))
