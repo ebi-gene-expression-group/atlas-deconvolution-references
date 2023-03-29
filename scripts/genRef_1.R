@@ -7,6 +7,10 @@ suppressMessages(library(sparseMatrixStats))
 
 #Read data
 args <- commandArgs(trailingOnly = TRUE)
+if(length(args) != 2) {
+   stop("Not correct number of arguments. Please supply 2 arguments")
+}
+
 filename <- args[1]
 transform <- args[2]
 C_0 <- readRDS(filename)
