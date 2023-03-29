@@ -123,7 +123,7 @@ rule copyInputFiles:
         cp {input} scxa_input/{wildcards.experiment}
         """
 
-#Rule for creating SeuratObjects for anndata and non anndata experiments
+# Rule for creating SeuratObjects for anndata and non anndata experiments
 rule createSeuratObject:
     log: "logs/createSeuratObject/{experiment}.log"
     input:
