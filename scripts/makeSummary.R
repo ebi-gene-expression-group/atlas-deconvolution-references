@@ -8,6 +8,10 @@ suppressMessages(library(ontologyIndex))
 suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = TRUE)
+if(length(args) < 3) {
+   stop("Not correct number of arguments. Please supply more than two arguments")
+}
 
 # read in list of UMAP.pngs we created
 sample_list <- args[1:(length(args)-1)]
