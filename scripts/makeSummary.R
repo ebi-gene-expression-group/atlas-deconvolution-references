@@ -19,7 +19,7 @@ if (!file.exists(outfile)) {
               outfile, sep = "\t", row.names = FALSE, col.names = TRUE)
 }
 
-#read in UBERON ontologys to translate UBERON ids to organism part labels
+# read in UBERON ontologies to translate UBERON ids to organism part labels
 obo_file = 'deconvolution-reference-library/files/basic.obo' #download here: http://purl.obolibrary.org/obo/uberon/basic.obo
 propagate_relationships = c('is_a', 'part_of', 'relationship: part_of', 'synonym')
 # create UBRERON ontology object
