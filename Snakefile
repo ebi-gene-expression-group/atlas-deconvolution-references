@@ -14,7 +14,7 @@
 
 #Set config here
 # config should 'accessions' to devoncolve and 'exclude_tissues_from_accessions'
-configfile: 'config.yaml'
+configfile: 'accession_deconvolution_references.yaml'
 
 import glob
 import os
