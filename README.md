@@ -20,5 +20,5 @@ It contains rules for:
 ## Run pipeline
 
 ```
-run_deconvolution_reference_creation.sh
+bash run_deconvolution_reference_creation.sh
 ```
