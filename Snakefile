@@ -109,8 +109,10 @@ rule all:
         #get_tissues_per_accession()
         config['deconv_ref'] + '/homo_sapiens_summary.tsv'
         
-# Rule for copying all the project anndata files we want to build references from
 rule copyInputFiles:
+    """
+    Rule for copying all the mtx, gene, barcode and metadata files we want to build references from.
+    """
     log: "logs/copyInputFiles/{experiment}.log"
     input:
        input_for_copy
@@ -122,9 +124,11 @@ rule copyInputFiles:
         mkdir -p scxa_input/{wildcards.experiment}
         cp {input} scxa_input/{wildcards.experiment}
         """
-
-# Rule for creating SeuratObjects for anndata and non anndata experiments
+        
 rule createSeuratObject:
+    """
+    Rule for creating SeuratObjects for anndata and non anndata scxa experiments.
+    """
     conda: "envs/createSeuratObject.yaml"
     log: "logs/createSeuratObject/{experiment}.log"
     input:
@@ -143,7 +147,8 @@ rule createSeuratObject:
 
 rule splitByTissue:
     """
-    Rule to split sc reference into single organism parts.
+    Rule to split sc reference into single organism parts if more than one
+    organism part is present.
     """
     conda: "envs/TissueSplit.yaml"
     log: "logs/splitByTissue/{tissue}_{experiment}.log"
@@ -157,9 +162,11 @@ rule splitByTissue:
         mkdir -p reference_library/homo_sapiens
         Rscript {workflow.basedir}/scripts/splitIntoTissues.R {input} {output} {wildcards.tissue}
         """
-
-#Rule to reduce cell type labels
+        
 rule reduce_celltype_labels:
+    """
+    Rule to reduce cell type labels by mapping cell types to their ancestors based on CL ontology.
+    """
     conda: "envs/scONTO.yaml"
     log: "logs/reduce_celltype_labels/{tissue}_{experiment}.log"
     input:
@@ -171,9 +178,14 @@ rule reduce_celltype_labels:
         """
         Rscript {workflow.basedir}/scripts/reduceCellTypes.R {input}
         """
-
-#Rule to generate different kind of references from the SeuratObject
+        
 rule generateReferences:
+    """
+    Rule to generate three different kind of references for deconvolution from the SeuratObject:
+     - C0: sc reference [genes x cells]
+     - C1: bulk reference [genes x cell types]
+     - phenData: metadata for C0
+    """
     conda: "envs/refgen.yaml"
     log: "logs/generateReferences/{tissue}_{experiment}.log"
     input:
@@ -190,8 +202,10 @@ rule generateReferences:
         Rscript {workflow.basedir}/scripts/genRef_1.R {input} {params.method}
         """
 
-#Rule to scale sc references
-rule scale_C:
+rule scale_C0_reference:
+    """
+    Rule to scale sc reference (C0) with 'SCTransform'.
+    """
     conda: "envs/refgen.yaml"
     log: "logs/scale_C/{tissue}_{experiment}.log"
     input:
@@ -207,8 +221,11 @@ rule scale_C:
         Rscript {workflow.basedir}/scripts/scaleTable_C.R {input.C_table} {input.C_phenData} {params.scaleCMethod} {threads}
         """
 
-# rule to plot UMAP plots for quality control of references
 rule UMAP_plots:
+    """
+    Rule to plot UMAP plots for quality control of references. Created two UMAP plots
+    in one png file with old and reduced cell type labels.
+    """
     conda: "envs/UMAPplot.yaml"
     log: "logs/UMAP_plots/{tissue}_{experiment}.log"
     input:
@@ -222,9 +239,11 @@ rule UMAP_plots:
         mkdir -p UMAP
         Rscript {workflow.basedir}/scripts/makeUMAPplots.R {input.seurat} {output}
         """
-
-# rule to create a summary of the organism part references we created
+        
 rule reference_summary:
+    """
+    Rule to create a summary file of the organism part references that were created.
+    """
     conda: "envs/scONTO.yaml"
     log: "logs/reference_summary/summary.log"
     input:
