@@ -1,6 +1,9 @@
 #!/usr/bin/env Rscript
 
-## Reference matrix type 1 (rows = genenames, cols = celltypes) generation script
+##  Rule to generate three different kind of references for deconvolution from the SeuratObject:
+##   - C_0: sc reference [genes x cells]
+##   - C_1: bulk reference [genes x cell types]
+##   - phenData: metadata for C0
 ##
 ## @zgr2788
 
@@ -16,8 +19,6 @@ if(length(args) != 2) {
 filename <- args[1]
 transform <- args[2]
 C_0 <- readRDS(filename)
-#filename <- sub("Input/Cell_splits", "Input/References", filename)
-
 #normalize
 
 #Write sc-counts matrix as separate object to save memory later on
@@ -62,4 +63,3 @@ for (i in 1:length(unique(C_0@meta.data$cellType)))
 saveRDS(C_1, file = sub("_seurat_curated", "_C1", filename ))
 saveRDS(C_counts, file = sub("_seurat_curated", "_C0", filename ))
 saveRDS(C_metadata, file = sub("_seurat_curated", "_phenData", filename))
-
