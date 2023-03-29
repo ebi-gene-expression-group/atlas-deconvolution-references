@@ -121,6 +121,8 @@ rule copyInputFiles:
     resources: mem_mb=get_mem_mb
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         mkdir -p scxa_input/{wildcards.experiment}
         cp {input} scxa_input/{wildcards.experiment}
         """
@@ -138,6 +140,8 @@ rule createSeuratObject:
     resources: mem_mb=get_mem_mb
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         if [[ {wildcards.experiment} == *"ANND"* ]]; then
             Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment}
         else
@@ -159,6 +163,8 @@ rule splitByTissue:
     resources: mem_mb=get_mem_mb
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         mkdir -p reference_library/homo_sapiens
         Rscript {workflow.basedir}/scripts/splitIntoTissues.R {input} {output} {wildcards.tissue}
         """
@@ -176,6 +182,8 @@ rule reduce_celltype_labels:
     resources: mem_mb=get_mem_mb
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         Rscript {workflow.basedir}/scripts/reduceCellTypes.R {input}
         """
         
@@ -199,6 +207,8 @@ rule generateReferences:
         method = "none"
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         Rscript {workflow.basedir}/scripts/genRef_1.R {input} {params.method}
         """
 
@@ -218,6 +228,8 @@ rule scale_C0_reference:
     resources: mem_mb=get_mem_mb
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         Rscript {workflow.basedir}/scripts/scaleTable_C.R {input.C_table} {input.C_phenData} {params.scaleCMethod} {threads}
         """
 
@@ -236,6 +248,8 @@ rule UMAP_plots:
     resources: mem_mb=get_mem_mb
     shell: 
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         mkdir -p UMAP
         Rscript {workflow.basedir}/scripts/makeUMAPplots.R {input.seurat} {output}
         """
@@ -252,5 +266,7 @@ rule reference_summary:
         config['deconv_ref'] + '/homo_sapiens_summary.tsv'
     shell:
         """
+        set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
+        exec &> "{log}"
         Rscript {workflow.basedir}/scripts/makeSummary.R {input} {output}
         """
