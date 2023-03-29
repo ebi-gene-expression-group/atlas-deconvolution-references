@@ -125,13 +125,12 @@ rule copyInputFiles:
 
 # Rule for creating SeuratObjects for anndata and non anndata experiments
 rule createSeuratObject:
+    conda: "envs/createSeuratObject.yaml"
     log: "logs/createSeuratObject/{experiment}.log"
     input:
         "scxa_input/{experiment}/{experiment}.copied"
     output:
         "scxa_input/{experiment}/{experiment}.project_seurat.rds"
-    conda:
-        "envs/createSeuratObject.yaml"
     resources: mem_mb=get_mem_mb
     shell:
         """
@@ -146,13 +145,12 @@ rule splitByTissue:
     """
     Rule to split sc reference into single organism parts.
     """
+    conda: "envs/TissueSplit.yaml"
     log: "logs/splitByTissue/{tissue}_{experiment}.log"
     input:
         "scxa_input/{experiment}/{experiment}.project_seurat.rds"
     output:
         config['deconv_ref'] + "/{tissue}_{experiment}_seurat.rds"
-    conda:
-        "envs/TissueSplit.yaml"
     resources: mem_mb=get_mem_mb
     shell:
         """
@@ -162,13 +160,12 @@ rule splitByTissue:
 
 #Rule to reduce cell type labels
 rule reduce_celltype_labels:
+    conda: "envs/scONTO.yaml"
     log: "logs/reduce_celltype_labels/{tissue}_{experiment}.log"
     input:
         config['deconv_ref'] + "/{tissue}_{experiment}_seurat.rds"
     output:
         temp(config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds")  
-    conda:
-        "envs/scONTO.yaml"
     resources: mem_mb=get_mem_mb
     shell:
         """
@@ -177,6 +174,7 @@ rule reduce_celltype_labels:
 
 #Rule to generate different kind of references from the SeuratObject
 rule generateReferences:
+    conda: "envs/refgen.yaml"
     log: "logs/generateReferences/{tissue}_{experiment}.log"
     input:
         config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds"
@@ -185,8 +183,6 @@ rule generateReferences:
         config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds",
         temp(config['deconv_ref'] +"/{tissue}_{experiment}_C0.rds")
     resources: mem_mb=get_mem_mb
-    conda:
-        'envs/refgen.yaml'
     params:
         method = "none"
     shell:
@@ -196,14 +192,13 @@ rule generateReferences:
 
 #Rule to scale sc references
 rule scale_C:
+    conda: "envs/refgen.yaml"
     log: "logs/scale_C/{tissue}_{experiment}.log"
     input:
         C_table=config['deconv_ref'] + "/{tissue}_{experiment}_C0.rds",
         C_phenData=config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds"
     output:
         config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
-    conda:
-        'envs/refgen.yaml'
     params: scaleCMethod = 'SCTransform'
     threads: 8
     resources: mem_mb=get_mem_mb
@@ -214,14 +209,13 @@ rule scale_C:
 
 # rule to plot UMAP plots for quality control of references
 rule UMAP_plots:
+    conda: "envs/UMAPplot.yaml"
     log: "logs/UMAP_plots/{tissue}_{experiment}.log"
     input:
         seurat=config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds",
         C0=config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
     output:
         'UMAP/{tissue}_{experiment}_umap.png'
-    conda:
-        'envs/UMAPplot.yaml'
     resources: mem_mb=get_mem_mb
     shell: 
         """
@@ -231,13 +225,12 @@ rule UMAP_plots:
 
 # rule to create a summary of the organism part references we created
 rule reference_summary:
+    conda: "envs/scONTO.yaml"
     log: "logs/reference_summary/summary.log"
     input:
         expand(get_tissues_per_accession())
     output:
         config['deconv_ref'] + '/homo_sapiens_summary.tsv'
-    conda:
-        "envs/scONTO.yaml"
     shell:
         """
         Rscript {workflow.basedir}/scripts/makeSummary.R {input} {output}
