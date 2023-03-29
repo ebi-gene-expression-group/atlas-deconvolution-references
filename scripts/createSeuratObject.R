@@ -24,9 +24,14 @@ C = CreateSeuratObject(counts = counts, meta.data = metadata)
 #rename colum names. If "inferred_cell_type_._ontology_labels_ontology"
 # is not present in metadata, try C$inferred_cell_type_._authors_labels_ontology 
 #we want to extract the UBERON ids from the links --> basename
-t <- try(C$cellType <- as.factor(basename(as.character(C$inferred_cell_type_._ontology_labels_ontology))))
-if("try-error" %in% class(t)){
-    C$cellType <- as.factor(basename(as.character(C$inferred_cell_type_._authors_labels_ontology)))
+first_try <- try(C$cellType
+                 <- as.factor(basename(as.character(C$authors_cell_type_._ontology_labels_ontology))))
+if("try-error" %in% class(first_try)){
+    seconf_try <- try(C$cellType
+                     <- as.factor(basename(as.character(C$authors_cell_type_ontology)))
+}
+if("try-error" %in% class(second_try)){
+    stop(paste(sample, 'does not seem to have ontology cell type labels, but this is a requirement to create references'))
 }
 C$tissue = as.factor(basename(as.character(C$organism_part_ontology)))
 C$cellID = colnames(C)
