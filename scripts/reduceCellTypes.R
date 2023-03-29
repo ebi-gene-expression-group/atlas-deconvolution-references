@@ -79,7 +79,7 @@ ont <- ontologyIndex::get_OBO(obo_file, propagate_relationships = propagate_rela
 
 # get a list of CL ontologies that we can map CL ids predent in SeuratObject to 
 additional_ontologies = names(ont$ancestors)
-additional_ontologies = unlist(ont$children, use.names = F)
+additional_ontologies <- unlist(ont$children, use.names = FALSE)
 
 #sort ontology ids that highest ids are in front as they tend to be more specific
 additional_ontologies <- additional_ontologies[order(-as.numeric(sub("CL:", "", additional_ontologies)))]
