@@ -109,7 +109,7 @@ rule all:
         #get_tissues_per_accession()
         config['deconv_ref'] + '/homo_sapiens_summary.tsv'
         
-#Rule for copying all the project anndatafiles we want to build references from
+# Rule for copying all the project anndata files we want to build references from
 rule copyInputFiles:
     log: "logs/copyInputFiles/{experiment}.log"
     input:
