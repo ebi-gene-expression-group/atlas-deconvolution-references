@@ -120,11 +120,7 @@ rule copyInputFiles:
     shell:
         """
         mkdir -p scxa_input/{wildcards.experiment}
-        if [[ {wildcards.experiment} == *"ANND"* ]]; then
-            cp {input} scxa_input/{wildcards.experiment}
-        else
-            cp {input} scxa_input/{wildcards.experiment}
-        fi
+        cp {input} scxa_input/{wildcards.experiment}
         """
 
 #Rule for creating SeuratObjects for anndata and non anndata experiments
