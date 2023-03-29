@@ -24,7 +24,7 @@ bash run_deconvolution_reference_creation.sh
 ```
 This file contains:
 * definition of variables
-* runs snakemake
+* runs snakemake like this:
 ```
 snakemake \
   -s $SNAKEFILE  \
@@ -42,9 +42,11 @@ snakemake \
 
 The output of this pipeline are :
 
-* deconvolution reference lib with three files per scxa accession + organism part (CO_scaled, C1 and )
-* one summary file of alle the references created
+* deconvolution reference lib with three files per scxa accession + organism part (CO_scaled, C1 and phenData)
+* one summary file of all the references created
 * one png file per scxa accession + organism part with two UMAP plots (old + new cell type labels) for quality control
 
 ## Contributions
-Folowing scripts are taken from the [CATD_snakemake pipeline] (https://github.com/Functional-Genomics/CATD_snakemake)
+Folowing scripts are taken from the [CATD_snakemake pipeline](https://github.com/Functional-Genomics/CATD_snakemake) which benchmarks deconvolution methods:
+* scaleTable.R
+* genRef_1.R
