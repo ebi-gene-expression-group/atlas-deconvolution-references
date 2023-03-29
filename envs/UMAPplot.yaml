@@ -1,5 +1,4 @@
 name: UMAP_plot
-
 channels: 
   - conda-forge
 
