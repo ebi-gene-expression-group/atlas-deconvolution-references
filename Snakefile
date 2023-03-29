@@ -93,7 +93,7 @@ def get_mem_mb(wildcards, attempt):
     """
     To adjust resources in the rules 
     attemps = reiterations + 1
-    Max number attemps = 8
+    Max number attemps = 4
     """
     mem_avail = [16, 32, 64, 128, 300 ]  
     if attempt > len(mem_avail):
