@@ -1,5 +1,5 @@
 # atlas-deconvolution-references
-Snakemake workflow to generate single-cell reference dataset for deconvolution in Atlas
+Snakemake workflow to generate single-cell reference dataset for bulk RNA-seq deconvolution in Atlas
 
 It contains rules for:
 - SeuratObject creation
