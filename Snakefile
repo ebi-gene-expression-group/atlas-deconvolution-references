@@ -107,7 +107,7 @@ def get_mem_mb(wildcards, attempt):
 rule all:
     input:
         #get_tissues_per_accession()
-        config['deconv_ref'] + '/homo_sapiens_summary.tsv'
+        config['deconv_ref'] + '/' + config['species'] + '_summary.tsv'
         
 rule copyInputFiles:
     """
@@ -197,10 +197,10 @@ rule generateReferences:
     conda: "envs/refgen.yaml"
     log: "logs/generateReferences/{tissue}_{experiment}.log"
     input:
-        config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds"
+        config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_seurat_curated.rds"
     output:
-        config['deconv_ref'] + "/{tissue}_{experiment}_C1.rds",
-        config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds",
+        config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_C1.rds",
+        config['deconv_ref']+ '/' + config['species'] + "/{tissue}_{experiment}_phenData.rds",
         temp(config['deconv_ref'] +"/{tissue}_{experiment}_C0.rds")
     resources: mem_mb=get_mem_mb
     params:
@@ -219,8 +219,8 @@ rule scale_C0_reference:
     conda: "envs/refgen.yaml"
     log: "logs/scale_C/{tissue}_{experiment}.log"
     input:
-        C_table=config['deconv_ref'] + "/{tissue}_{experiment}_C0.rds",
-        C_phenData=config['deconv_ref'] + "/{tissue}_{experiment}_phenData.rds"
+        C_table=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_C0.rds",
+        C_phenData=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_phenData.rds"
     output:
         config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
     params: scaleCMethod = 'SCTransform'
@@ -241,8 +241,8 @@ rule UMAP_plots:
     conda: "envs/UMAPplot.yaml"
     log: "logs/UMAP_plots/{tissue}_{experiment}.log"
     input:
-        seurat=config['deconv_ref'] + "/{tissue}_{experiment}_seurat_curated.rds",
-        C0=config['deconv_ref'] + "/{tissue}_{experiment}_C0_scaled.rds"
+        seurat=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_seurat_curated.rds",
+        C0=config['deconv_ref'] + '/' + config['species'] + "/{tissue}_{experiment}_C0_scaled.rds"
     output:
         'UMAP/{tissue}_{experiment}_umap.png'
     resources: mem_mb=get_mem_mb
@@ -263,7 +263,7 @@ rule reference_summary:
     input:
         expand(get_tissues_per_accession())
     output:
-        config['deconv_ref'] + '/homo_sapiens_summary.tsv'
+        config['deconv_ref'] + '/' + config['species'] + '_summary.tsv'
     shell:
         """
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
