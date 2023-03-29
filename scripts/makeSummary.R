@@ -3,7 +3,7 @@
 
 # Load required packages
 suppressMessages(library(devtools))
-devtools::install_github("YY-SONG0718/scOntoMatch")
+if (!require("scOntoMatch")) devtools::install_github("YY-SONG0718/scOntoMatch")
 suppressMessages(library(scOntoMatch))
 suppressMessages(library(ontologyIndex))
 suppressMessages(library(stringr))
