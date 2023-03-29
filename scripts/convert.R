@@ -22,7 +22,6 @@ counts = ReadMtx(mtx = paste0('scxa_input/',sample,'/matrix.mtx.gz'),
 metadata = read.csv(paste0('scxa_input/',sample,'/', sample, '.cell_metadata.tsv'), 
                         sep = '\t', row.names = 1) #row.names should be cellIDs
 
-#create SeuratObject
 C = CreateSeuratObject(counts = counts, meta.data = metadata)
 
 # rename colum names. If "inferred_cell_type_._ontology_labels_ontology" is 
