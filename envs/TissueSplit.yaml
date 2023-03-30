@@ -8,3 +8,4 @@ dependencies:
   - r-seurat>=4.3.0
   - r-r.utils
   - r-argparse
+  - r-stringi
