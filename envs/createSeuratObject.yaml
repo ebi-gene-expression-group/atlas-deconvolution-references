@@ -9,3 +9,4 @@ dependencies:
   - r-plyr
   - r-stringr
   - r-devtools
+  - r-stringi
