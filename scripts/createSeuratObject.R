@@ -30,12 +30,12 @@ SeuratObject = CreateSeuratObject(counts = counts, meta.data = metadata)
 first_try <- try(SeuratObject$cellType
                  <- as.factor(basename(as.character(SeuratObject$authors_cell_type_._ontology_labels_ontology))))
 if("try-error" %in% class(first_try)){
-    seconf_try <- try(SeuratObject$cellType
-                     <- as.factor(basename(as.character(SeuratObject$authors_cell_type_ontology)))
-}
-if("try-error" %in% class(second_try)){
-    stop(paste(accession, 'does not seem to have ontology cell type labels, but this is a requirement to create references'))
-}
+    second_try <- try(SeuratObject$cellType
+                     <- as.factor(basename(as.character(SeuratObject$authors_cell_type_ontology))))
+   if("try-error" %in% class(second_try)){
+         stop(paste(accession, 'does not seem to have ontology cell type labels, but this is a requirement to create references'))
+   }
+ }
 SeuratObject$tissue = as.factor(basename(as.character(SeuratObject$organism_part_ontology)))
 SeuratObject$cellID = colnames(SeuratObject)
 
