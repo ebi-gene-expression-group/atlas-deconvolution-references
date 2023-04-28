@@ -26,7 +26,7 @@ def get_tissues_per_accession():
     parts that are acquired from cell_metadata.tsv
     """
     outnames = []
-    #ANND experiements not yet in atlas_prod
+    #ANND experiements not yet in sc_exps
     for accession in config['accessions']:
         if "E-ANND-" in accession:
             path = os.path.join(config['anndata_prod'], "*", accession, f"{accession}.cell_metadata.tsv")
@@ -40,9 +40,9 @@ def get_tissues_per_accession():
             except Exception as e:
                 print(f"Error: Failed to read file {path[0]}: {e}")
                 continue
-        #for accessions in atlas_prod
+        #for accessions in sc_exps
         else:
-            path = os.path.join(config['atlas_prod'], accession, f"{accession}.cell_metadata.tsv")
+            path = os.path.join(config['sc_exps'], accession, f"{accession}.cell_metadata.tsv")
             if not os.path.isfile(path):
                 print(f"Error: cell metadata not found for accession {accession}")
                 continue
@@ -80,13 +80,13 @@ def input_for_copy(wildcards):
         meta = mtx_path + f"/{wildcards['experiment']}.cell_metadata.tsv"
         return [mtx,  col, row , meta]
     else:
-        return [os.path.join(config['atlas_prod'], wildcards['experiment'], \ 
+        return [os.path.join(config['sc_exps'], wildcards['experiment'], \ 
          f"{wildcards['experiment']}.aggregated_filtered_counts.mtx"),
-                os.path.join(config['atlas_prod'], wildcards['experiment'],  \ 
+                os.path.join(config['sc_exps'], wildcards['experiment'],  \ 
                 f"{wildcards['experiment']}.aggregated_filtered_counts.mtx_cols"), 
-                os.path.join(config['atlas_prod'], wildcards['experiment'], \ 
+                os.path.join(config['sc_exps'], wildcards['experiment'], \ 
                  f"{wildcards['experiment']}.aggregated_filtered_counts.mtx_rows"), 
-                os.path.join(config['atlas_prod'], wildcards['experiment'],  \ 
+                os.path.join(config['sc_exps'], wildcards['experiment'],  \ 
                 f"{wildcards['experiment']}.cell_metadata.tsv")]
             
 def get_mem_mb(wildcards, attempt):
