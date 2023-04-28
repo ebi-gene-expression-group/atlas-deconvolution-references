@@ -29,7 +29,7 @@ write.table(data.frame(
 }
 
 # read in UBERON ontologies to translate UBERON ids to organism part labels
-obo_file = 'atlas-deconvolution-references/files/basic.obo' #download here: http://purl.obolibrary.org/obo/uberon/basic.obo
+obo_file = 'files/basic.obo' #download here: http://purl.obolibrary.org/obo/uberon/basic.obo
 propagate_relationships = c('is_a', 'part_of', 'relationship: part_of', 'synonym')
 # create UBRERON ontology object
 ont <- ontologyIndex::get_OBO(obo_file,
