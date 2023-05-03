@@ -106,5 +106,8 @@ seurat$old_cell_type_names <- mapvalues(seurat$cellType, from = ids , to = cell_
 # run function to reduce granularity of cell type labels
 seurat = reduce_number_of_cell_types(seurat, ont, additional_ontologies)
 
+# store cell type ontology labels in cellType column as these will be required for the final output
+seurat$cellType = seurat$cell_type_names
+
 #save curated seuratObject
 saveRDS(seurat, sub("_seurat.rds", "_seurat_curated.rds", filename))
