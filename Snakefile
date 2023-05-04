@@ -1,9 +1,6 @@
 ## Reference library preperation for deconvolution in 
 ## Expression Atlas
 ##
-## 
-##
-##
 ## Description:
 ##
 ## Gets scxa accessions from config.yaml file and creates tissue
