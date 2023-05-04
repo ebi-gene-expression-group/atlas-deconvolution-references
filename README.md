@@ -57,6 +57,6 @@ The output of this pipeline are :
 * one png file per scxa accession + organism part with two UMAP plots (old + new cell type labels) for quality control
 
 ## Contributions
-Folowing scripts are taken from the [CATD_snakemake pipeline](https://github.com/Functional-Genomics/CATD_snakemake) which benchmarks deconvolution methods:
+The following scripts are taken from the [CATD_snakemake pipeline](https://github.com/Functional-Genomics/CATD_snakemake) which benchmarks deconvolution methods:
 * scaleTable.R
 * genRef_1.R
