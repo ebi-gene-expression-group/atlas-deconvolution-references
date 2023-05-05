@@ -162,7 +162,6 @@ rule splitByTissue:
         """
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
         exec &> "{log}"
-        mkdir -p reference_library/homo_sapiens
         Rscript {workflow.basedir}/scripts/splitIntoTissues.R {input} {output} {wildcards.tissue}
         """
         
