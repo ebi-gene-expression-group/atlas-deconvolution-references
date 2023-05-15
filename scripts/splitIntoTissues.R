@@ -34,23 +34,5 @@ seurat_tissue <- sc[, sc$tissue == args$tissue ]
 seurat_tissue <- seurat_tissue[, grepl("CL", seurat_tissue$cellType) 
                             & grepl("UBERON", seurat_tissue$tissue) ]
 
-# Downsampling to get max 300 cells per celltype
-# this is done to reduce the size of the dataset
-cell_types <- unique(seurat_tissue$cellType)
-seurat_downsampled = list()
-for (ct in cell_types) {
-  cells <- colnames(subset(seurat_tissue, cellType == ct))
-  if (length(cells) > 300) {
-    cells <- sample(cells, 300)
-    print(cells)
-  }
-  # append the downsamples cell types
-  seurat_downsampled[ct] <- seurat_tissue[,cells]
-}
-seurat_downsampled = merge(
-  seurat_downsampled[[1]],
-  y = seurat_downsampled[2:length(cell_types)]
-)
-
 # Save output
-saveRDS(seurat_downsampled, args$output)
+saveRDS(seurat_tissue, args$output)
