@@ -13,7 +13,7 @@ if(length(args) != 2) {
 accession = args[1]
 species = args[2]
 
-SeuratObject_filename = paste0('scxa_input/', species, accession,'/', accession, '.project_seurat.rds')
+SeuratObject_filename = paste0('scxa_input/', species, '/', accession,'/', accession, '.project_seurat.rds')
 #read in counts
 counts = ReadMtx(mtx = paste0('scxa_input/',accession,'/', accession, '.aggregated_filtered_counts.mtx'), 
              features= paste0('scxa_input/',accession, '/', accession,'.aggregated_filtered_counts.mtx_rows'), 
