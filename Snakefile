@@ -140,9 +140,9 @@ rule createSeuratObject:
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
         exec &> "{log}"
         if [[ {wildcards.experiment} == *"ANND"* ]]; then
-            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment}
+            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment} {wildcards.species}
         else
-            Rscript {workflow.basedir}/scripts/createSeuratObject.R {wildcards.experiment}
+            Rscript {workflow.basedir}/scripts/createSeuratObject.R {wildcards.experiment} {wildcards.species}
         fi
         """
 
