@@ -6,6 +6,10 @@ suppressMessages(library(cowplot))
 suppressMessages(library(ggplot2))
 
 args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 2) {
+   stop("Not correct number of arguments. Please supply two arguments")
+}
+
 filename <- args[1]
 output_file_name <- args[2]
 
