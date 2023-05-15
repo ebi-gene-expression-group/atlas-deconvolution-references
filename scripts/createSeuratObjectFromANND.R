@@ -8,13 +8,13 @@ suppressMessages(library(plyr))
 suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
-if(length(args) != 1) {
-   stop("Not correct number of arguments. Please supply 1 argument")
+if(length(args) != 2) {
+   stop("Not correct number of arguments. Please supply 2 arguments")
 }
-accession = args
-
+accession = args[1]
+species = args[2]
 #filename of seuratObject
-SeuratObject_filename = paste0('scxa_input/',accession,'/', accession, '.project_seurat.rds')
+SeuratObject_filename = paste0('scxa_input/', species, '/', accession, '/', accession, '.project_seurat.rds')
 
 #read in counts
 counts = ReadMtx(mtx = paste0('scxa_input/',accession ,'/matrix.mtx.gz'), 
