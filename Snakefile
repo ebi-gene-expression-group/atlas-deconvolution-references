@@ -24,7 +24,7 @@ def get_tissues_per_accession(wildcards):
     """
     outnames = []
     for sp in config['species']:
-        if sp == wildcards['species']:
+        if sp['name'] == wildcards['species']:
             for accession in sp['accessions']:
                 # ANND experiements not yet in sc_exps
                 if "E-ANND-" in accession:
