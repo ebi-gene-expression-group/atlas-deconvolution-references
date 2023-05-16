@@ -31,7 +31,7 @@ if (sum(grepl(args$tissue, sc$tissue)) == 0) {
 
 # Remove cells without CL and UBERON IDs
 sc <- sc[, grepl("CL", sc$cellType) 
-                            && grepl("UBERON", sc$tissue) ]
+                            & grepl("UBERON", sc$tissue) ]
 
 seurat_tissue <- sc[, sc$tissue == args$tissue]
 
