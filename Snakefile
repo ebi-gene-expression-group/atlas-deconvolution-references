@@ -268,7 +268,7 @@ rule reference_summary:
     conda: "envs/scONTO.yaml"
     log: "logs/reference_summary/{species}_summary.log"
     input:
-        expand(get_tissues_per_accession("{species}"))
+        get_tissues_per_accession("{species}")
     output:
         config['deconv_ref'] + '/{species}_summary.tsv'
     shell:
