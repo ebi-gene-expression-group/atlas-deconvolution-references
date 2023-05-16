@@ -115,7 +115,7 @@ def get_mem_mb(wildcards, attempt):
 rule all:
     input:
         #get_tissues_per_accession()
-        expand(config['deconv_ref'] + "/{species}_summary.tsv", species=config['species'][name])
+        expand(config['deconv_ref'] + "/{species}_summary.tsv", species=config['species'][0][name])
         
 rule copyInputFiles:
     """
