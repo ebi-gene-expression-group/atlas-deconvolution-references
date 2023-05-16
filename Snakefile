@@ -50,7 +50,8 @@ def get_tissues_per_accession():
                 except Exception as e:
                     print(f"Error: Failed to read file {path}: {e}")
                     continue
-                uberon_paths = list(set(data["organism_part_ontology"]))
+                # only select tissues which have cell type ontology labels
+                uberon_paths = list(set(data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]["organism_part_ontology"]))
                 # select only items that are UBERON path
                 uberon_paths = [x for x in uberon_paths if "UBERON" in str(x)]
                 # extract uberons from paths
