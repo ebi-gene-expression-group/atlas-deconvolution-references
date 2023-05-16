@@ -28,11 +28,12 @@ sc$tissue <- as.factor(gsub(":", "_", sc$tissue))
 if (sum(grepl(args$tissue, sc$tissue)) == 0) {
   stop("Tissue not found in Seurat object.")
 }
-seurat_tissue <- sc[, sc$tissue == args$tissue ]
 
 # Remove cells without CL and UBERON IDs
-seurat_tissue <- seurat_tissue[, grepl("CL", seurat_tissue$cellType) 
-                            & grepl("UBERON", seurat_tissue$tissue) ]
+sc <- sc[, grepl("CL", sc$cellType) 
+                            && grepl("UBERON", sc$tissue) ]
+
+seurat_tissue <- sc[, sc$tissue == args$tissue]
 
 # Downsampling to get max 300 cells per celltype
 # this is done to reduce the size of the dataset
