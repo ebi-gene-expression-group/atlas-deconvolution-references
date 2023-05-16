@@ -69,10 +69,10 @@ def get_tissues_per_accession(wildcards):
                     outnames.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
                 to_remove =  [f"UMAP/{wildcards['species']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']]
 
-        outnames = [item for sublist in outnames for item in sublist]
-        # remove outnames where we dont want tissue references to be generated
-        outnames = [x for x in outnames if x not in to_remove]
-        return outnames
+            outnames = [item for sublist in outnames for item in sublist]
+            # remove outnames where we dont want tissue references to be generated
+            outnames = [x for x in outnames if x not in to_remove]
+            return outnames
 
 def input_for_copy(wildcards):
     """
