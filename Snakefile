@@ -17,14 +17,14 @@ import glob
 import os
 import pandas as pd
 
-def get_tissues_per_accession(species):
+def get_tissues_per_accession(wildcards):
     """
     Returns list of files with valid combinations of accession and organism
     parts that are acquired from cell_metadata.tsv
     """
     outnames = []
     for sp in config['species']:
-        if sp == species:
+        if sp == wildcards['species']:
             for accession in sp['accessions']:
                 # ANND experiements not yet in sc_exps
                 if "E-ANND-" in accession:
@@ -66,8 +66,8 @@ def get_tissues_per_accession(species):
                     uberon_paths = [x for x in uberon_paths if "UBERON" in str(x)]
                     # extract uberons from paths
                     uberons = [os.path.basename(path) for path in uberon_paths]
-                    outnames.append([f"UMAP/{sp['name']}/{uberon}_{accession}_umap.png" for uberon in uberons])
-                to_remove =  [f"UMAP/{sp['name']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']]
+                    outnames.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
+                to_remove =  [f"UMAP/{wildcards['species']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']]
 
         outnames = [item for sublist in outnames for item in sublist]
         # remove outnames where we dont want tissue references to be generated
@@ -268,7 +268,7 @@ rule reference_summary:
     conda: "envs/scONTO.yaml"
     log: "logs/reference_summary/{species}_summary.log"
     input:
-        get_tissues_per_accession("species")
+        get_tissues_per_accession
     output:
         config['deconv_ref'] + '/{species}_summary.tsv'
     shell:
