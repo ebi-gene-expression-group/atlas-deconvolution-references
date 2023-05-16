@@ -45,13 +45,13 @@ seurat_downsampled = list()
      cells <- sample(cells, 300)
      print(cells)
    }
-    append the downsamples cell types
+   # append the downsamples cell types
    seurat_downsampled[ct] <- seurat_tissue[,cells]
  }
  seurat_downsampled = merge(
    seurat_downsampled[[1]],
    y = seurat_downsampled[2:length(cell_types)]
  )
-
+ 
 # Save output
 saveRDS(seurat_downsampled, args$output)
