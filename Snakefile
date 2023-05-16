@@ -69,10 +69,10 @@ def get_tissues_per_accession(species):
                     outnames.append([f"UMAP/{sp['name']}/{uberon}_{accession}_umap.png" for uberon in uberons])
                 to_remove =  [f"UMAP/{sp['name']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']]
 
-    outnames = [item for sublist in outnames for item in sublist]
-    # remove outnames where we dont want tissue references to be generated
-    outnames = [x for x in outnames if x not in to_remove]
-    return outnames
+        outnames = [item for sublist in outnames for item in sublist]
+        # remove outnames where we dont want tissue references to be generated
+        outnames = [x for x in outnames if x not in to_remove]
+        return outnames
 
 def input_for_copy(wildcards):
     """
@@ -268,7 +268,7 @@ rule reference_summary:
     conda: "envs/scONTO.yaml"
     log: "logs/reference_summary/{species}_summary.log"
     input:
-        get_tissues_per_accession("{species}")
+        get_tissues_per_accession("species")
     output:
         config['deconv_ref'] + '/{species}_summary.tsv'
     shell:
