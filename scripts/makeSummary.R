@@ -10,7 +10,7 @@ suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-if(length(args) < 3) {
+if(length(args) < 2) {
    stop("Not correct number of arguments. Please supply more than two arguments")
 }
 
