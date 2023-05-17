@@ -17,12 +17,12 @@ species = args[2]
 SeuratObject_filename = paste0('scxa_input/', species, '/', accession, '/', accession, '.project_seurat.rds')
 
 #read in counts
-counts = ReadMtx(mtx = paste0('scxa_input/',accession ,'/matrix.mtx.gz'), 
-        features= paste0('scxa_input/',accession , '/genes.tsv.gz'), #genes should be ENS ids without .\d
-        cells=   paste0('scxa_input/',accession ,'/barcodes.tsv.gz'),  feature.column = 1)
+counts = ReadMtx(mtx = paste0('scxa_input/', species, '/', accession ,'/matrix.mtx.gz'), 
+        features= paste0('scxa_input/', species, '/', accession , '/genes.tsv.gz'), #genes should be ENS ids without .\d
+        cells=   paste0('scxa_input/', species, '/', accession ,'/barcodes.tsv.gz'),  feature.column = 1)
 
 #read in metadata for cells
-metadata = read.csv(paste0('scxa_input/',accession,'/', accession, '.cell_metadata.tsv'), 
+metadata = read.csv(paste0('scxa_input/',  species, '/', accession,'/', accession, '.cell_metadata.tsv'), 
                         sep = '\t', row.names = 1) #row.names should be cellIDs
 
 SeuratObject = CreateSeuratObject(counts = counts, meta.data = metadata)
