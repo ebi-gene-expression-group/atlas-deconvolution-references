@@ -131,8 +131,8 @@ rule copyInputFiles:
         """
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
         exec &> "{log}"
-        mkdir -p scxa_input/{wildcards.species}/{wildcards.experiment}
-        cp {input} scxa_input/{wildcards.species}/{wildcards.experiment}
+        mkdir -p scxa_input/{wildcards.species}
+        cp {input} scxa_input/{wildcards.species}
         """
         
 rule createSeuratObject:
