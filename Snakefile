@@ -51,8 +51,7 @@ def get_tissues_per_accession(wildcards):
                     except Exception as e:
                         print(f"Error: Failed to read file {path}: {e}")
                         continue
-                    # only select tissues which have cell type ontology labels
-                uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
+                # only select tissues which have cell type ontology labels
                 try:
                     uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
                 except KeyError:
