@@ -23,6 +23,7 @@ def get_tissues_per_accession(wildcards):
     parts that are acquired from cell_metadata.tsv
     """
     outnames = []
+    to_remove = []
     for sp in config['species']:
         if sp['name'] == wildcards['species']:
             for accession in sp['accessions']:
@@ -65,16 +66,19 @@ def get_tissues_per_accession(wildcards):
                     if len(cell_type_counts[cell_type_counts >= 50]) >= 2:
                         filtered_paths.append(path)
                 uberon_paths = filtered_paths
-                # uberon_paths = list(set(data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]["organism_part_ontology"]))
                 # select only items that are UBERON path
                 uberon_paths = [x for x in uberon_paths if "UBERON" in str(x)]
                 # extract uberons from paths
                 uberons = [os.path.basename(path) for path in uberon_paths]
+                # make reference filenames
                 outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
-                to_remove =  [f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']]
-                # remove outnames where we dont want tissue references to be generated
-                outnames = [x for x in outnames if x not in to_remove]
+                to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
+    # flatten lists
     outnames = [item for sublist in outnames for item in sublist]
+    to_remove = [item for sublist in to_remove for item in sublist]
+    # remove outnames where we dont want tissue references to be generated
+    outnames = [x for x in outnames if x not in to_remove]
+   
     return outnames
 
 def input_for_copy(wildcards):
