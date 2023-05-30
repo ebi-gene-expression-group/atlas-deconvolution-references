@@ -276,6 +276,7 @@ rule reference_summary:
     log: "logs/reference_summary/{species}_summary.log"
     input:
         get_tissues_per_accession
+        rules.UMAP_plots.output
     output:
         config['deconv_ref'] + '/{species}_summary.tsv'
     shell:
