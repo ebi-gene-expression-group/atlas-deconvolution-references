@@ -260,8 +260,7 @@ rule UMAP_plots:
         seurat=config['deconv_ref'] + "/{species}/{tissue}_{experiment}_seurat_curated.rds",
         C0=config['deconv_ref'] + "/{species}/{tissue}_{experiment}_C0_scaled.rds"
     output:
-        get_tissues_per_accession
-        #"UMAP/{species}/{tissue}_{experiment}_umap.png"
+        "UMAP/{species}/{tissue}_{experiment}_umap.png"
     resources: mem_mb=get_mem_mb
     shell: 
         """
