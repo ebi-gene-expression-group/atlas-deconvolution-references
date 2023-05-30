@@ -71,8 +71,10 @@ def get_tissues_per_accession(wildcards):
                 # extract uberons from paths
                 uberons = [os.path.basename(path) for path in uberon_paths]
                 # make reference filenames
-                outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
-                to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
+                #outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
+                outnames.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
+                #to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
+                to_remove.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
     # flatten lists
     outnames = [item for sublist in outnames for item in sublist]
     to_remove = [item for sublist in to_remove for item in sublist]
@@ -121,9 +123,8 @@ def get_mem_mb(wildcards, attempt):
 # Rule all
 rule all:
     input:
-        #get_tissues_per_accession()
-        #expand(config['deconv_ref'] + "/{species}_summary.tsv", species=[sp['name'] for sp in config['species']])
-        rules.UMAP_plots.output
+        #get_tissues_per_accession
+        expand(config['deconv_ref'] + "/{species}_summary.tsv", species=[sp['name'] for sp in config['species']])
              
 rule copyInputFiles:
     """
@@ -259,7 +260,8 @@ rule UMAP_plots:
         seurat=config['deconv_ref'] + "/{species}/{tissue}_{experiment}_seurat_curated.rds",
         C0=config['deconv_ref'] + "/{species}/{tissue}_{experiment}_C0_scaled.rds"
     output:
-        "UMAP/{species}/{tissue}_{experiment}_umap.png"
+        get_tissues_per_accession
+        #"UMAP/{species}/{tissue}_{experiment}_umap.png"
     resources: mem_mb=get_mem_mb
     shell: 
         """
