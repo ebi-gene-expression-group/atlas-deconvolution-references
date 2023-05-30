@@ -74,7 +74,7 @@ def get_tissues_per_accession(wildcards):
                 #outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
                 outnames.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
                 #to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
-                to_remove.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
+                to_remove.append([f"UMAP/{wildcards['species']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
     # flatten lists
     outnames = [item for sublist in outnames for item in sublist]
     to_remove = [item for sublist in to_remove for item in sublist]
