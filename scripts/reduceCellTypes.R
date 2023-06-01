@@ -20,7 +20,7 @@ reduce_number_of_cell_types <- function(seurat, cell_ontology, additional_ontolo
   i <- 0
   # we want to run this until we get to the desired number of cell types or
   # max_combine gets to high it would mapp cell types to too general terms
-  while (length(unique(seurat$cellType)) > 8 && max_combine < 4) {
+  while (length(unique(seurat$cellType)) > 100 && max_combine < 4) { # test: remove later!
     for (ont_id in additional_ontologies) {
       i <- i + 1 
       if (i > length(additional_ontologies)) {
