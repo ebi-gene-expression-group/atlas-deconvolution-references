@@ -56,8 +56,11 @@ def get_tissues_per_accession(wildcards):
                 try:
                     uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
                 except KeyError:
-                    data['inferred_cell_type_-_ontology_labels_ontology'] = data['authors_cell_type_-_ontology_labels_ontology']
-                    uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
+                    try:
+                        data['inferred_cell_type_-_ontology_labels_ontology'] = data['authors_cell_type_-_ontology_labels_ontology']
+                        uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
+                    except KeyError:
+                        print(f"Error: '{accession}' metadata file does not have requiered ontology cell type labels")
                 uberon_paths = uberon_paths.groupby('organism_part_ontology')['inferred_cell_type_-_ontology_labels_ontology'].nunique()
                 uberon_paths = uberon_paths[uberon_paths >= 2].index.tolist()
                 filtered_paths = []
