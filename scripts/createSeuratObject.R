@@ -7,7 +7,7 @@ suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-if(length(args) != 2) {
+if(length(args) != 6) {
    stop("Not correct number of arguments. Please supply 2 arguments")
 }
 accession = args[1]
