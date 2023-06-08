@@ -8,8 +8,8 @@ suppressMessages(library(plyr))
 suppressMessages(library(stringr))
 
 args <- commandArgs(trailingOnly = TRUE)
-if(length(args) != 2) {
-   stop("Not correct number of arguments. Please supply 2 arguments")
+if(length(args) != 6) {
+   stop("Not correct number of arguments. Please supply 6 arguments")
 }
 accession = args[1]
 species = args[2]
