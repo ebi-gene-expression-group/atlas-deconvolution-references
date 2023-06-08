@@ -45,7 +45,7 @@ SeuratObject$cellID = colnames(SeuratObject)
 SeuratObject <- SeuratObject[, grepl("CL", SeuratObject$cellType) & grepl("UBERON", SeuratObject$tissue) ]
 
 # change 'exitatory Neuron' id to 'Neuron' as its obsolete
-seurat$cellType = mapvalues(seurat$cellType, 'CL_0008030', 'CL_0000540')
+SeuratObject$cellType = mapvalues(SeuratObject$cellType, 'CL_0008030', 'CL_0000540')
 
 #save SeuratObject
 saveRDS(SeuratObject, SeuratObject_filename)
