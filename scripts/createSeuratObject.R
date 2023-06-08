@@ -13,9 +13,9 @@ if(length(args) != 2) {
 accession = args[1]
 species = args[2]
 mtx_path = args[3]
-rows_path = args[3]
-cols_path = args[3]
-cells_path = args[3]
+cols_path = args[4]
+rows_path = args[5]
+cells_path = args[6]
 
 SeuratObject_filename = paste0('scxa_input/', species, '/', accession,'/', accession, '.project_seurat.rds')
 #read in counts
