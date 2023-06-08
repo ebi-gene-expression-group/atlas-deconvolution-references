@@ -154,7 +154,7 @@ rule createSeuratObject:
     conda: "envs/createSeuratObject.yaml"
     log: "logs/createSeuratObject/{species}_{experiment}.log"
     input:
-        "scxa_input/{species}/{experiment}/{experiment}.copied"
+        input_for_copy
     output:
         "scxa_input/{species}/{experiment}/{experiment}.project_seurat.rds"
     resources: mem_mb=get_mem_mb
@@ -163,9 +163,9 @@ rule createSeuratObject:
         set -e # snakemake on the cluster doesn't stop on error when --keep-going is set
         exec &> "{log}"
         if [[ {wildcards.experiment} == *"ANND"* ]]; then
-            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment} {wildcards.species}
+            Rscript {workflow.basedir}/scripts/createSeuratObjectFromANND.R {wildcards.experiment} {wildcards.species} {input}
         else
-            Rscript {workflow.basedir}/scripts/createSeuratObject.R {wildcards.experiment} {wildcards.species}
+            Rscript {workflow.basedir}/scripts/createSeuratObject.R {wildcards.experiment} {wildcards.species} {input}
         fi
         """
 
