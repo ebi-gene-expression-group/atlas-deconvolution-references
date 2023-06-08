@@ -23,7 +23,7 @@ SeuratObject_filename = paste0('scxa_input/', species, '/', accession, '/', acce
 
 #read in counts
 counts = ReadMtx(mtx = mtx_path, 
-                features = rows_path), #genes should be ENS ids without .\d
+                features = rows_path, #genes should be ENS ids without .\d
                 cells = cols_path, feature.column = 1)
 
 #read in metadata for cells
