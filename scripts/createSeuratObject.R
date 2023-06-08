@@ -12,14 +12,18 @@ if(length(args) != 2) {
 }
 accession = args[1]
 species = args[2]
+mtx_path = args[3]
+rows_path = args[3]
+cols_path = args[3]
+cells_path = args[3]
 
 SeuratObject_filename = paste0('scxa_input/', species, '/', accession,'/', accession, '.project_seurat.rds')
 #read in counts
-counts = ReadMtx(mtx = paste0('scxa_input/', species, '/', accession,'/', accession, '.aggregated_filtered_counts.mtx'), 
-             features= paste0('scxa_input/', species, '/', accession, '/', accession,'.aggregated_filtered_counts.mtx_rows'), 
-             cells=   paste0('scxa_input/', species, '/', accession,'/', accession, '.aggregated_filtered_counts.mtx_cols'))
+counts = ReadMtx(mtx = mtx_path, 
+                 features = rows_path, 
+                 cells = cols_path)
 #read in metadata for cells
-metadata = read.csv(paste0('scxa_input/', species, '/', accession ,'/', accession, '.cell_metadata.tsv'), sep = '\t', row.names = 1)
+metadata = read.csv(cells_path, sep = '\t', row.names = 1)
 
 #filter only cells that have metadata
 counts = counts[,colnames(counts) %in% rownames(metadata)]
