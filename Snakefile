@@ -40,50 +40,50 @@ def get_tissues_per_accession(wildcards):
                     except Exception as e:
                         print(f"Error: Failed to read file {path[0]}: {e}")
                         continue
-                #for accessions in sc_exps
-                else:
-                    path = os.path.join(config['sc_exps'], accession, f"{accession}.cell_metadata.tsv")
-                    if not os.path.isfile(path):
-                        print(f"Error: cell metadata not found for accession {accession}")
-                        continue
                     try:
-                        with open(path, "r") as f:
-                            data = pd.read_csv(f, sep="\t", low_memory=False)
-                    except Exception as e:
-                        print(f"Error: Failed to read file {path}: {e}")
-                        continue
-                # only select tissues which have cell type ontology labels
-                try:
-                    uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
-                except KeyError:
-                    try:
-                        data['inferred_cell_type_-_ontology_labels_ontology'] = data['authors_cell_type_-_ontology_labels_ontology']
                         uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
                     except KeyError:
-                        print(f"Error: '{accession}' metadata file does not have requiered ontology cell type labels")
-                uberon_paths = uberon_paths.groupby('organism_part_ontology')['inferred_cell_type_-_ontology_labels_ontology'].nunique()
-                uberon_paths = uberon_paths[uberon_paths >= 2].index.tolist()
-                filtered_paths = []
-                for path in uberon_paths:
-                    cell_type_counts = data[data['organism_part_ontology'] == path]['inferred_cell_type_-_ontology_labels_ontology'].value_counts()
-                    if len(cell_type_counts[cell_type_counts >= 50]) >= 2:
-                        filtered_paths.append(path)
-                uberon_paths = filtered_paths
-                # select only items that are UBERON path
-                uberon_paths = [x for x in uberon_paths if "UBERON" in str(x)]
-                # extract uberons from paths
-                uberons = [os.path.basename(path) for path in uberon_paths]
-                # make reference filenames
-                #outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
-                outnames.append([f"UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
-                #to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
-                to_remove.append([f"UMAP/{wildcards['species']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
-    # flatten lists
+                        try:
+                            data['inferred_cell_type_-_ontology_labels_ontology'] = data['authors_cell_type_-_ontology_labels_ontology']
+                            uberon_paths = data[data['inferred_cell_type_-_ontology_labels_ontology'].notnull()]
+                        except KeyError:
+                            print(f"Error: '{accession}' metadata file does not have requiered ontology cell type labels")
+                    uberon_paths = uberon_paths.groupby('organism_part_ontology')['inferred_cell_type_-_ontology_labels_ontology'].nunique()
+                    uberon_paths = uberon_paths[uberon_paths >= 2].index.tolist()
+                    filtered_paths = []
+                    for path in uberon_paths:
+                        cell_type_counts = data[data['organism_part_ontology'] == path]['inferred_cell_type_-_ontology_labels_ontology'].value_counts()
+                        if len(cell_type_counts[cell_type_counts >= 50]) >= 2:
+                            filtered_paths.append(path)
+                    uberon_paths = filtered_paths
+                    # select only items that are UBERON path
+                    uberon_paths = [x for x in uberon_paths if "UBERON" in str(x)]
+                    # extract uberons from paths
+                    uberons = [os.path.basename(path) for path in uberon_paths]
+                    #for accessions in sc_exps
+                else:
+                    path = os.path.join(config["sc_exps"], accession, f"{accession}.condensed-sdrf.tsv")
+                    uberon_ids = set()
+                    if not os.path.isfile(path):
+                        print(f"Error: condensed-sdrf not found for accession {accession}")
+                        #continue
+                    try:
+                        with open(path, 'r') as file:
+                            for line in file:
+                                uberon_match = re.search(r'http://purl.obolibrary.org/obo/UBERON_\d+', line)
+                                if uberon_match:
+                                    uberon_id = uberon_match.group()
+                                    uberon_ids.add(uberon_id)
+                    except Exception as e:
+                        print(f"Error: Failed to read file {path}: {e}")
+                    uberons = [os.path.basename(path) for path in uberon_ids]
+                print(sp['exclude_tissues_from_accessions'])
+                outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
+                to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
     outnames = [item for sublist in outnames for item in sublist]
     to_remove = [item for sublist in to_remove for item in sublist]
-    # remove outnames where we dont want tissue references to be generated
     outnames = [x for x in outnames if x not in to_remove]
-   
+    
     return outnames
 
 def input_for_copy(wildcards):
