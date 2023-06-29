@@ -107,7 +107,7 @@ def input_for_copy(wildcards):
                 os.path.join(config['sc_exps'], wildcards['experiment'], \ 
                  f"{wildcards['experiment']}.aggregated_filtered_counts.mtx_rows"), 
                 os.path.join(config['sc_exps'], wildcards['experiment'],  \ 
-                f"{wildcards['experiment']}.cell_metadata.tsv")]
+                f"{wildcards['experiment']}.condensed-sdrf.tsv")]
             
 def get_mem_mb(wildcards, attempt):
     """
