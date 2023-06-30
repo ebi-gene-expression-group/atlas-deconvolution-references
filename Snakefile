@@ -78,8 +78,8 @@ def get_tissues_per_accession(wildcards):
                     except Exception as e:
                         print(f"Error: Failed to read file {path}: {e}")
                     uberons = [os.path.basename(path) for path in uberon_ids]
-                outnames.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon}_{accession}_C1.rds" for uberon in uberons])
-                to_remove.append([f"{config['deconv_ref']}/{wildcards['species']}/{uberon_and_accession}_C1.rds" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
+                outnames.append([f""UMAP/{wildcards['species']}/{uberon}_{accession}_umap.png" for uberon in uberons])
+                to_remove.append([f"UMAP/{wildcards['species']}/{uberon_and_accession}_umap.png" for uberon_and_accession in sp['exclude_tissues_from_accessions']])
     outnames = [item for sublist in outnames for item in sublist]
     to_remove = [item for sublist in to_remove for item in sublist]
     outnames = [x for x in outnames if x not in to_remove]
