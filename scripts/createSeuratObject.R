@@ -68,7 +68,7 @@ first_try <- try(SeuratObject$cellType
                  <- as.factor(basename(as.character(SeuratObject$factor_inferred.cell.type...ontology.labels))))
 if("try-error" %in% class(first_try)){
     second_try <- try(SeuratObject$cellType
-                     <- as.factor(basename(as.character(SeuratObject$factor_inferred.cell.type...ontology.labels))))
+                     <- as.factor(basename(as.character(SeuratObject$characteristic_cell.type))))
    if("try-error" %in% class(second_try)){
          stop(paste(accession, 'does not seem to have ontology cell type labels, but this is a requirement to create references'))
    }
