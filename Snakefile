@@ -70,10 +70,11 @@ def get_tissues_per_accession(wildcards):
                     try:
                         with open(path, 'r') as file:
                             for line in file:
-                                uberon_match = re.search(r'http://purl.obolibrary.org/obo/UBERON_\d+', line)
-                                if uberon_match:
-                                    uberon_id = uberon_match.group()
-                                    uberon_ids.add(uberon_id)
+                                if "organism part" in line:
+                                    uberon_match = re.search(r'http://purl.obolibrary.org/obo/UBERON_\d+', line)
+                                    if uberon_match:
+                                        uberon_id = uberon_match.group()
+                                        uberon_ids.add(uberon_id)
                     except Exception as e:
                         print(f"Error: Failed to read file {path}: {e}")
                     uberons = [os.path.basename(path) for path in uberon_ids]
