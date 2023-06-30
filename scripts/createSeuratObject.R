@@ -65,7 +65,7 @@ SeuratObject = CreateSeuratObject(counts = counts, meta.data = cell_metadata)
 # is not present in metadata, try SeuratObject$inferred_cell_type_._authors_labels_ontology 
 #we want to extract the UBERON ids from the links --> basename
 first_try <- try(SeuratObject$cellType
-                 <- as.factor(basename(as.character(SeuratObject$characteristic_cell.type))))
+                 <- as.factor(basename(as.character(SeuratObject$factor_inferred.cell.type...ontology.labels))))
 if("try-error" %in% class(first_try)){
     second_try <- try(SeuratObject$cellType
                      <- as.factor(basename(as.character(SeuratObject$factor_inferred.cell.type...ontology.labels))))
