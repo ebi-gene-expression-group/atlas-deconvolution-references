@@ -83,9 +83,9 @@ additional_ontologies <- unlist(ont$children, use.names = FALSE)
 #sort ontology ids that highest ids are in front as they tend to be more specific
 additional_ontologies <- additional_ontologies[order(-as.numeric(sub("CL:", "", additional_ontologies)))]
 #remove 'precursor cell', 'progenitor', 'stuff accumulating cell', 'nucleate cell', 'single nucleate cell', 
-# 'barrier cell', 'mononuclear cell'
+# 'barrier cell', 'mononuclear cell', 'motile cell'
 # id to avoid these terms 
-ontologies_to_remove = c("CL:0011115", "CL:0011026", "CL:0000325", "CL:0002242", "CL:0000226", "CL:0000215", "CL:0000842")
+ontologies_to_remove = c("CL:0011115", "CL:0011026", "CL:0000325", "CL:0002242", "CL:0000226", "CL:0000215", "CL:0000842", "CL:0000219")
 additional_ontologies = additional_ontologies[ !(additional_ontologies %in% ontologies_to_remove)]
 
 args = commandArgs(trailingOnly=TRUE)
