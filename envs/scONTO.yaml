@@ -2,6 +2,7 @@ name: scONTO
 channels: 
   - conda-forge
   - bioconda
+
 dependencies:
   - r-devtools
   - r-seurat>=4.3.0

@@ -1,7 +1,9 @@
 name: SeuratObject
+
 channels: 
   - conda-forge
-  - bioconda 
+  - bioconda
+
 dependencies:
   - r-seurat>=4.3.0
   - r-plyr
