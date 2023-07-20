@@ -5,11 +5,9 @@
 ##
 ## Gets scxa accessions from config.yaml file and creates tissue
 ## specifc references per accession that are used for deconvolution analysis
-## 
-##
-##
 
-#Set config here
+
+# Set config here
 # config should 'accessions' to devoncolve and 'exclude_tissues_from_accessions'
 configfile: 'accession_deconvolution_references.yaml'
 
@@ -124,7 +122,7 @@ def get_mem_mb(wildcards, attempt):
     else:
         return mem_avail[attempt-1] * 1000
 
-# Rule all
+
 rule all:
     input:
         #get_tissues_per_accession
