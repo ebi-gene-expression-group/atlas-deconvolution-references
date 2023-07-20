@@ -1,0 +1,8 @@
+name: ref_gen
+channels: 
+  - conda-forge
+  - bioconda 
+dependencies:
+  - bioconductor-sparsematrixstats
+  - r-seurat>=4.3.0
+  - r-stringi 

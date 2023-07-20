@@ -1,0 +1,8 @@
+name: UMAP_plot
+channels: 
+  - conda-forge
+dependencies:
+  - r-seurat>=4.3.0
+  - r-ggplot2
+  - r-cowplot
+  - r-stringi
