@@ -12,7 +12,7 @@ It contains rules for:
 ## Prerequisites
 
  * Snakemake
- * LSF batch scheduler
+ * A batch scheduler, LSF or SLURM
  * Set up configuration variables at `run_deconvolution_reference_creation.sh`
  * Config.yaml with sc experiment accessions as input and tissues that are excluded for accessions (look at example.yaml how that should look like)
  * Download ontology files for [UBERON](http://purl.obolibrary.org/obo/uberon/basic.obo) and [CL](http://purl.obolibrary.org/obo/cl/c-basic.obo) ontology and put in folder `files`
@@ -28,7 +28,7 @@ This file contains:
 ```
 snakemake \
   -s $SNAKEFILE  \
-  --profile [cluster profile] \
+  --profile [cluster profile 'lsf' or 'slurm'] \
   --rerun-incomplete \
   --retries 3 \ # if job fails try with more memory
   --use-conda --conda-frontend mamba --keep-going \
@@ -36,7 +36,9 @@ snakemake \
   anndata_prod=[path/to/anndata_prot_dir]\
   deconv_ref=[path/to/desination/of/reference_library] \
 ```
-* checks if references for organims parts are generated more than once and returns duplicated organism parts which can then be included in conig.yaml.
+For SLURM profile, add `--slurm`.
+
+* checks if references for organims parts are generated more than once and returns duplicated organism parts which can then be included in config.yaml.
 
 example:
 For these UBERON ids multiple references exist:
